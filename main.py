@@ -40,10 +40,16 @@ jahoda_rect.center = (100, 250)
 
 sign_image = pygame.image.load("obrázky/sign.png")
 sign_rect = sign_image.get_rect()
-sign_rect.center = (width-16, 250)
+sign_rect.center = (width-16, 300)
 
 sign_rect2 = sign_image.get_rect()
-sign_rect2.center = (500, height)
+sign_rect2.center = (300, height)
+
+sign_rect3 = sign_image.get_rect()
+sign_rect3.center = (width-16, 200)
+
+sign_rect4 = sign_image.get_rect()
+sign_rect4.center = (200, height)
 
 #hudba v pozadí
 pygame.mixer.music.load("songy/sound.wav")
@@ -78,10 +84,12 @@ while Hra:
 
     if worm_rect.colliderect(sign_rect):
         score = 0
-
-    if worm_rect.colliderect(sign_rect2):
+    elif worm_rect.colliderect(sign_rect2):
         score = 0
-
+    elif worm_rect.colliderect(sign_rect3):
+        score = 0
+    elif worm_rect.colliderect(sign_rect4):
+        score = 0
     #překážka
 
     if sign_rect.x <= 0:
@@ -89,12 +97,12 @@ while Hra:
         if random_cislo == 1:
             sign_rect.y = random.randint(50,250)
         elif random_cislo == 0:
-            sign_rect.y = random.randint(250, 500)
+            sign_rect.y = random.randint(250, 490)
         sign_rect.x = width
 
     sign_rect.x -= 5
 
-    if sign_rect2.y <= 0:
+    if sign_rect2.y <= 50:
         random_cislo = random.randint(0,1)
         if random_cislo == 1:
             sign_rect2.x = random.randint(0,500)
@@ -103,6 +111,26 @@ while Hra:
         sign_rect2.y = height
 
     sign_rect2.y -= 5
+
+    if sign_rect3.x <= 0:
+        random_cislo = random.randint(0,1)
+        if random_cislo == 1:
+            sign_rect3.y = random.randint(50,250)
+        elif random_cislo == 0:
+            sign_rect3.y = random.randint(250, 500)
+        sign_rect3.x = width
+
+    sign_rect3.x -= 5
+
+    if sign_rect4.y <= 50:
+        random_cislo = random.randint(0,1)
+        if random_cislo == 1:
+            sign_rect4.x = random.randint(0,490)
+        elif random_cislo == 0:
+            sign_rect4.x = random.randint(500, width)
+        sign_rect4.y = height
+
+    sign_rect4.y -= 5
 
 
 
@@ -127,6 +155,9 @@ while Hra:
     screen.blit(score_text, score_text_rect)
     screen.blit(sign_image, sign_rect)
     screen.blit(sign_image, sign_rect2)
+    if score >= 5:
+        screen.blit(sign_image, sign_rect3)
+        screen.blit(sign_image, sign_rect4)
 
     # Updat obrazu
     pygame.display.update()
@@ -135,3 +166,4 @@ while Hra:
     clock.tick(fps)
 
 pygame.quit()
+
