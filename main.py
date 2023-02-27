@@ -13,6 +13,7 @@ pohyb = 10
 fps = 60
 clock = pygame.time.Clock()
 score = 0
+lvl = 0
 
 #barvy
 black = (0, 0, 0)
@@ -53,7 +54,8 @@ sign_rect4.center = (200, height)
 
 #hudba v pozadí
 pygame.mixer.music.load("songy/sound.wav")
-pygame.mixer.music.play(-1, 0.0)
+pygame.mixer.music.set_volume(0.4)
+pygame.mixer.music.play(-1)
 
 #zvuky
 zvuk = pygame.mixer.Sound("songy/pick.wav")
@@ -90,6 +92,7 @@ while Hra:
         score = 0
     elif worm_rect.colliderect(sign_rect4):
         score = 0
+
     #překážka
 
     if sign_rect.x <= 0:
@@ -148,14 +151,24 @@ while Hra:
     score_text_rect.x = 10
     score_text_rect.y = 10
 
+    lvl_text = font_jahody.render(f"level: {lvl}", True, blue)
+    lvl_text_rect = lvl_text.get_rect()
+    lvl_text_rect.x = 900
+    lvl_text_rect.y = 10
+
     # přidání obrázků
     screen.blit(worm_image, worm_rect)
     screen.blit(jahoda_image, jahoda_rect)
     screen.blit(jahody_text, jahody_text_rect)
     screen.blit(score_text, score_text_rect)
+    screen.blit(lvl_text, lvl_text_rect)
     screen.blit(sign_image, sign_rect)
     screen.blit(sign_image, sign_rect2)
-    if score >= 5:
+
+    if score == 10:
+        lvl += 1
+        score = 0
+    if lvl >= 1:
         screen.blit(sign_image, sign_rect3)
         screen.blit(sign_image, sign_rect4)
 
@@ -166,4 +179,3 @@ while Hra:
     clock.tick(fps)
 
 pygame.quit()
-
